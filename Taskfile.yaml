@@ -1,6 +1,11 @@
 version: '3'
 
 tasks:
+  cleanDocker:
+    desc: Clean up docker images and volumes
+    cmds:
+      - docker stop $(docker ps -q ) && docker system prune -fa --volumes
+      
   sync:
     desc: Sync the Taskfile.yaml to ~
     cmds:
