@@ -1,0 +1,15 @@
+version: '3'
+
+tasks:
+  sync:
+    desc: Sync the Taskfile.yaml to ~
+    cmds:
+      - gh repo clone dodizzle/goUtilities /tmp/dodizzle/taskfile
+      - cp /tmp/dodizzle/taskfile/Taskfile.yaml ~/
+      - rm -rf /tmp/dodizzle/goUtilities
+
+  G:
+    desc: Go to golang home
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - 
