@@ -8,8 +8,9 @@ tasks:
       - cp /tmp/dodizzle/taskfile/Taskfile.yaml ~/
       - rm -rf /tmp/dodizzle/goUtilities
 
-  G:
-    desc: Go to golang home
+
+  taskfile:
+    desc: Open Taskfile.yaml in vs code editor
     dir: '{{.USER_WORKING_DIR}}'
     cmds:
-      - 
+      - code ~/GO/src/github.com/dodizzle/taskfile/Taskfile.yaml
