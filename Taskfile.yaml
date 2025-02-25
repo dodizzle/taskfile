@@ -1,6 +1,12 @@
 version: '3'
 
 tasks:
+  cleanDocker:
+    desc: Clean up docker images and volumes
+    cmds:
+      - docker stop $(docker ps -q )
+      - docker system prune -fa --volumes
+
   docker build:
     desc: docker build
     cmds:
