@@ -1,7 +1,7 @@
 version: '3'
 
 tasks:
-  cleanDocker:
+  clean-docker:
     desc: Clean up docker images and volumes
     cmds:
       - docker system prune -fa --volumes
@@ -9,12 +9,13 @@ tasks:
   sync:
     desc: Sync the Taskfile.yaml to ~
     cmds:
-      - gh repo clone dodizzle/goUtilities /tmp/dodizzle/taskfile
-      - cp /tmp/dodizzle/taskfile/Taskfile.yaml ~/
-      - rm -rf /tmp/dodizzle
+      - gh repo clone dodizzle/taskfile /tmp/taskfile
+      - cp /tmp/taskfile/Taskfile.yaml ~/
+      - rm -rf /tmp/taskfile
 
-  taskfile:
+  edit-task-file:
     desc: Open Taskfile.yaml in vs code editor
     dir: '{{.USER_WORKING_DIR}}'
     cmds:
-      - code ~/GO/src/github.com/dodizzle/taskfile/Taskfile.yaml
+      - gh repo clone dodizzle/taskfile /tmp/taskfile
+      - code /tmp/taskfile/Taskfile.yaml
