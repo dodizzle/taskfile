@@ -19,3 +19,12 @@ tasks:
     cmds:
       - gh repo clone dodizzle/taskfile /tmp/taskfile
       - code /tmp/taskfile/Taskfile.yaml
+
+  commit-taskfile:
+    desc: Add Taskfile.yaml, commit it, and push to GitHub
+    dir: /tmp/taskfile/
+    cmds:
+      - git add Taskfile.yaml
+      - git commit -m "Update Taskfile.yaml"
+      - git push origin main
+
