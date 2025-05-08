@@ -4,26 +4,7 @@ tasks:
   cleanDocker:
     desc: Clean up docker images and volumes
     cmds:
-      - docker stop $(docker ps -q )
       - docker system prune -fa --volumes
-
-  docker build:
-    desc: docker build
-    cmds:
-    - docker build -t webservice:latest .
-
-  docker up:
-    desc: docker compose up
-    cmds:
-    - docker-compose up -d
-    - docker container logs -f webservice
-
-  docker down: 
-    desc: docker compose down
-    cmds:
-    - docker-compose down --remove-orphans
-    - rm -rf pgdata
-    - docker system prune -f
 
   sync:
     desc: Sync the Taskfile.yaml to ~
