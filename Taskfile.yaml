@@ -9,6 +9,7 @@ tasks:
   source-bash-profile:
     desc: Source bash profile
     dir: '{{.USER_WORKING_DIR}}'
+    sh: bash
     cmds:
       - source ~/.bash_profile
   clean-docker:
