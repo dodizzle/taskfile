@@ -9,15 +9,24 @@ tasks:
   sync:
     desc: Sync the Taskfile.yaml to ~
     cmds:
-      - gh repo clone dodizzle/taskfile /tmp/taskfile
+      - |
+        if [ $(task check-dir DIR_PATH=/tmp/taskfile) = "false" ]; then
+          gh repo clone dodizzle/taskfile /tmp/taskfile
+        else
+          cd /tmp/taskfile && git pull
+        fi
       - cp /tmp/taskfile/Taskfile.yaml ~/
-      - rm -rf /tmp/taskfile
 
   edit-task-file:
     desc: Open Taskfile.yaml in vs code editor
     dir: '{{.USER_WORKING_DIR}}'
     cmds:
-      - gh repo clone dodizzle/taskfile /tmp/taskfile
+      - |
+        if [ $(task check-dir DIR_PATH=/tmp/taskfile) = "false" ]; then
+          gh repo clone dodizzle/taskfile /tmp/taskfile
+        else
+          cd /tmp/taskfile && git pull
+        fi
       - code /tmp/taskfile/Taskfile.yaml
 
   commit-taskfile:
@@ -27,4 +36,10 @@ tasks:
       - git add Taskfile.yaml
       - git commit -m "Update Taskfile.yaml"
       - git push origin main
-
+      
+  check-dir:
+      desc: Check if a directory exists
+      cmds:
+        - test -d {{.DIR_PATH}} && echo "true" || echo "false"
+      vars:
+        DIR_PATH: "{{.DIR_PATH | default '.'}}"
