@@ -6,11 +6,12 @@ tasks:
     dir: '{{.USER_WORKING_DIR}}'
     cmds:
       - code ~/.bash_profile
+      
   source-bash-profile:
     desc: Source bash profile
     dir: '{{.USER_WORKING_DIR}}'
     cmds:
-      - . ~/.bash_profile
+      - bash -c '. ~/.bash_profile'
   clean-docker:
     desc: Clean up docker images and volumes
     cmds:
