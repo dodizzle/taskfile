@@ -54,3 +54,9 @@ tasks:
         - test -d {{.DIR_PATH}} && echo "true" || echo "false"
       vars:
         DIR_PATH: "{{.DIR_PATH | default '.'}}"
+
+  gcloud-auth:
+    desc: Authenticate to gcloud
+    cmds:
+      - gcloud auth login
+      - gcloud auth application-default login
