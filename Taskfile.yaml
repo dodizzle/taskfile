@@ -3,11 +3,19 @@ version: '3'
 tasks:
   delete-helm-secrets:
     desc: Delete all Helm secrets for a release in a namespace
-    requires:
-      vars: [RELEASE, NAMESPACE]
     cmds:
-      # Helm v3 stores releases as Kubernetes Secrets with labels owner=helm and name=<release>
-      - kubectl -n {{.NAMESPACE}} delete secret -l "owner=helm,name={{.RELEASE}}"
+      - |
+        if [ $# -ne 2 ]; then
+          echo "Usage: task delete-helm-secrets -- <release> <namespace>"
+          exit 1
+        fi
+        RELEASE=$1
+        NAMESPACE=$2
+        echo "Deleting Helm secrets for release '$RELEASE' in namespace '$NAMESPACE'..."
+        kubectl -n $NAMESPACE delete secret -l "owner=helm,name=$RELEASE"
+    vars:
+      ARGS: { sh: 'echo "$TASK_ARGS"' }
+    silent: true
       
   edit-bash-profile:
     desc: Edit bash profile
