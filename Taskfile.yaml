@@ -5,13 +5,10 @@ tasks:
     desc: Delete all Helm secrets for a release in a namespace
     cmds:
       - |
-        set -- {{.TASK_ARGS}}
-        if [ $# -ne 2 ]; then
-          echo "Usage: task delete-helm-secrets -- <release> <namespace>"
-          exit 1
-        fi
-        RELEASE=$1
-        NAMESPACE=$2
+        echo -n "Enter Helm release name: "
+        read RELEASE
+        echo -n "Enter namespace: "
+        read NAMESPACE
         echo "Deleting Helm secrets for release '$RELEASE' in namespace '$NAMESPACE'..."
         kubectl -n $NAMESPACE delete secret -l "owner=helm,name=$RELEASE"
       
