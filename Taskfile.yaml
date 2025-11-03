@@ -29,7 +29,7 @@ tasks:
       - docker system prune -fa --volumes
 
   sync:
-    desc: Sync the Taskfile.yaml to ~
+    desc: Sync the Taskfile.yaml and renew-rancher-tokens binary to ~
     cmds:
       - |
         if [ $(task check-dir DIR_PATH=/tmp/taskfile) = "false" ]; then
@@ -38,6 +38,8 @@ tasks:
           cd /tmp/taskfile && git pull
         fi
       - cp /tmp/taskfile/Taskfile.yaml ~/
+      - cp /tmp/taskfile/renew-rancher-tokens ~/.local/bin/
+      - chmod +x ~/.local/bin/renew-rancher-tokens
 
   edit-task-file:
     desc: Open Taskfile.yaml in vs code editor
@@ -74,24 +76,21 @@ tasks:
 
   renew-rancher-tokens:
     desc: Renew Rancher kubeconfig tokens for all clusters
-    dir: ~/.kube
     cmds:
-      - source venv/bin/activate && python renew_rancher_tokens.py
+      - renew-rancher-tokens
 
   renew-rancher-tokens-dry:
     desc: Preview token renewal without making changes (dry run)
-    dir: ~/.kube
     cmds:
-      - source venv/bin/activate && python renew_rancher_tokens.py --dry-run
+      - renew-rancher-tokens --dry-run
 
   renew-rancher-token:
     desc: Renew Rancher token for a specific cluster
-    dir: ~/.kube
     cmds:
       - |
         echo -n "Enter cluster name (dev, stg, prod, etc.): "
         read CLUSTER
-        source venv/bin/activate && python renew_rancher_tokens.py --cluster $CLUSTER
+        renew-rancher-tokens --cluster $CLUSTER
         
   check-token-expiry:
     desc: Check when Rancher tokens expire (estimates 30 days from creation)
